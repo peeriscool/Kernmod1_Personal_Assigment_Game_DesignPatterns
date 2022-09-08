@@ -8,6 +8,7 @@ using System;
 public class DefaultState : State
 {
 	protected StateMachine Owner;
+	GameObject test; //cube for testing
 	//  public event EventHandler Tick;
 	int Count = 0;
 	public DefaultState(StateMachine _owner)
@@ -23,15 +24,14 @@ public class DefaultState : State
 
     public override void OnEnter()
     {
-
+	     test = GameObject.Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
     }
     public override void OnUpdate()
     {
-	    Debug.Log("Updatecalls" + Count);
-	    //  InitTimer();
+	    Debug.Log("Update_calls" + Count);
 	    Count++;
-	    GameObject test = GameObject.Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
-	    test.transform.position = new Vector3(Count,0,0);
+	    test.transform.position = new Vector3(Mathf.Sin(Count),0,0);
+	    //  InitTimer();
     }
     public override void OnExit()
     {

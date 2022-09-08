@@ -12,8 +12,8 @@ public class FSMOwner : MonoBehaviour
 	// 
 	/// </summary>
 	
-	EnvoirmentIdle State1; //for envoirment timed states
-	DefaultState state2 ;
+	EnvoirmentIdle State1; //for envoirment timed states (counting in seconds)
+	DefaultState State2 ; //a state that sine moves a cube (for now)
 	StateMachine SampleMachine;
     void Start()
     {
@@ -21,22 +21,22 @@ public class FSMOwner : MonoBehaviour
 	  
 	    SampleMachine = new StateMachine(State1);   //create statemachine
 	    
-	    state2 = new DefaultState(SampleMachine);
-	    SampleMachine.AddState(state2);
+	    State2 = new DefaultState(SampleMachine);
+	    SampleMachine.AddState(State2);
         SampleMachine.OnStart(State1);              //parse states to machine
         
     }
 	//50 ticks a sec
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.A) == true)
+	    if (Input.GetKeyDown(KeyCode.A) == true)
         {
-	        SampleMachine.OnUpdate();                 //update state machine (only when pressed)
+	        SampleMachine.OnStart(State1);           
         }
-	    if (Input.GetKey(KeyCode.S) == true)
-	    {
-	    	SampleMachine.OnStart(state2);  
+	    if (Input.GetKeyDown(KeyCode.S) == true)
+	    { 
+	    	SampleMachine.OnStart(State2);  
 	    }
-
+	    SampleMachine.OnUpdate(); //update state machine 
     }
 }

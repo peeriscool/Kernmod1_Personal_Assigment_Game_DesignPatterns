@@ -4,8 +4,10 @@ using UnityEngine;
 
 public abstract class State
 {
-    //does a state need a constructor?
-    //what would u give an abstract class?
+	/// <summary>
+	/// the States keep track of the enter and exit points of a loop
+	/// with the Status delegate 
+	/// </summary>
     //public State(StateMachine owner) 
     //{
     //    this.owner = owner;
@@ -15,6 +17,6 @@ public abstract class State
     public abstract void OnUpdate();
     public abstract void OnExit();
 
-    public delegate bool Isfinished();
-    public Isfinished status;
+	public delegate bool Isfinished(); //Delegates are used to pass methods as arguments to other methods
+	public Isfinished Status;
 }

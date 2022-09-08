@@ -8,26 +8,26 @@ public class StateMachine
     private Dictionary<System.Type, State> states = new Dictionary<System.Type, State>(); //list of availible states
 
    // StateMachine owner;
-    public StateMachine(State RecievedState) //constructer for state machine
+	public StateMachine(State _recievedState) //constructer for state machine
     {
 	    //give a start state
 	    //make an instance, run update from a monobehavior or other form of update tick
-        AddState(RecievedState);
+	    AddState(_recievedState);
     }
 
-    public void OnStart(State state) //init a state
+	public void OnStart(State _state) //init a state
     {      
-        currentstate = states[state.GetType()]; //assign given state as first state
+	    currentstate = states[_state.GetType()]; //assign given state as first state
         currentstate.OnEnter();
     }
     public void OnUpdate() //get update method from a state
     {
         currentstate?.OnUpdate();
     }
-    public void AddState(State state)
+	public void AddState(State _state)
     {
-        states.Add(state.GetType(), state); //putting state in dictonary
-        Debug.Log(state + " added to " + states.ToString());
+	    states.Add(_state.GetType(), _state); //putting state in dictonary
+	    Debug.Log(_state + " added to " + states.ToString());
     }
 
     public void StateUpdate()
