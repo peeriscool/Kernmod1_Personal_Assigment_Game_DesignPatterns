@@ -2,21 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State
+public class State<T>
 {
-	/// <summary>
-	/// the States keep track of the enter and exit points of a loop
-	/// with the Status delegate 
-	/// </summary>
-    //public State(StateMachine owner) 
-    //{
-    //    this.owner = owner;
-    //}
-    protected StateMachine owner;
-    public abstract void OnEnter();
-    public abstract void OnUpdate();
-    public abstract void OnExit();
-
-	public delegate bool Isfinished(); //Delegates are used to pass methods as arguments to other methods
-	public Isfinished Status;
+	// The name for the state.
+	public string Name { get; set; }
+	// The ID of the state.
+	public T ID { get; private set; }    
+	
+	//public delegate void OnEnter();
+	//public delegate void OnExit();
+	//public delegate void OnUpdate();
+	public State(T id)
+	{
+		ID = id;
+	}
+	
+	public State(T id, string name) : this(id)
+	{
+		Name = name;
+	}
+	virtual public void OnEnter()
+	{
+	}
+	virtual public void OnExit()
+	{
+	}
+	virtual public void OnUpdate()
+	{
+	}
 }
+//https://faramira.com/generic-finite-state-machine-using-csharp/
+

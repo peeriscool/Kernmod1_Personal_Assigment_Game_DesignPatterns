@@ -1,51 +1,86 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class StateMachine
+//https://faramira.com/generic-finite-state-machine-using-csharp/
+public class StateMachine<T>
 {
-    private State currentstate;
-    private Dictionary<System.Type, State> states = new Dictionary<System.Type, State>(); //list of availible states
+	protected Dictionary<T, State<T> > states; //list of availible states
+	State<T> Currentstate;
+	
+	public void Update()
+	{
+	  if (Currentstate != null)
+	  {
+		  Currentstate.OnUpdate();
+	  }
+	}
+	
+	public StateMachine()
+	{
+		states = new Dictionary<T, State<T>>();
+	}
 
-   // StateMachine owner;
-	public StateMachine(State _recievedState) //constructer for state machine
-    {
-	    //give a start state
-	    //make an instance, run update from a monobehavior or other form of update tick
-	    AddState(_recievedState);
-    }
+	public void AddState(State<T> _state)
+	{
+		states.Add(_state.ID, _state);
+	}
+	
+	public State<T> GetState(T stateID)
+	{
+	if (states.ContainsKey(stateID))
+		return states[stateID];
+		return null;
+	}
 
-	public void OnStart(State _state) //init a state
-    {      
-	    currentstate = states[_state.GetType()]; //assign given state as first state
-        currentstate.OnEnter();
-    }
-    public void OnUpdate() //get update method from a state
-    {
-        currentstate?.OnUpdate();
-    }
-	public void AddState(State _state)
-    {
-	    states.Add(_state.GetType(), _state); //putting state in dictonary
-	    Debug.Log(_state + " added to " + states.ToString());
-    }
+	public void SetCurrentState(State<T> _state)
+	{
+		if(Currentstate == _state)
+		{
+			return;
+		}
+		if(Currentstate != null)
+		{
+			Currentstate.Onexit();
+		}
+		if(Currentstate != null)
+		{
+			Currentstate.Onenter;
+		}
+		//Currentstate = _state;
+	}
 
-    public void StateUpdate()
-    {
-        //early return
-        if (currentstate == null) return;
-       // bool status = owner.currentstate.status(); //listens to the state event status
-
-        //update state
-        //currentstate.Run();
-
-        //foreach (currentstate t in currentstate.Transitions)
-        //{
-        //    if (t.condition())
-        //    {
-        //        SetState(StatePool.GetState(t.target));
-        //    }
-        //}
-    }
+	
 }
 
+/*public class State<T>
+{
+	// The name for the state.
+	public string Name { get; set; }
+	// The ID of the state.
+	public T ID { get; private set; }    
+	
+	//public delegate void OnEnter();
+	//public delegate void OnExit();
+	//public delegate void OnUpdate();
+	public State(T id)
+	{
+		ID = id;
+	}
+	
+	public State(T id, string name) : this(id)
+	{
+		Name = name;
+	}
+	virtual public void Enter()
+	{
+	}
+	virtual public void Exit()
+	{
+	}
+	virtual public void Update()
+	{
+	}
+}
+//https://faramira.com/generic-finite-state-machine-using-csharp/
+*/

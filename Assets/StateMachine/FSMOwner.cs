@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FSMOwner : MonoBehaviour
 {
 	/// <summary>
@@ -12,18 +13,18 @@ public class FSMOwner : MonoBehaviour
 	// 
 	/// </summary>
 	
-	EnvoirmentIdle State1; //for envoirment timed states (counting in seconds)
-	DefaultState State2 ; //a state that sine moves a cube (for now)
-	StateMachine SampleMachine;
+	EnemyAttackState attack; //for envoirment timed states (counting in seconds)
+	EnemyidleState idle ; //a state that sine moves a cube (for now)
+	StateMachine<FSMOwner> SampleMachine;
     void Start()
-    {
-	    State1 = new EnvoirmentIdle(); //define states 
-	  
-	    SampleMachine = new StateMachine(State1);   //create statemachine
+	{
+		SampleMachine = new StateMachine<FSMOwner>();   //create statemachine
 	    
-	    State2 = new DefaultState(SampleMachine);
-	    SampleMachine.AddState(State2);
-        SampleMachine.OnStart(State1);              //parse states to machine
+		attack = new EnemyAttackState(); //add states
+		idle = new EnemyidleState();
+		SampleMachine.AddState(attack); //assign states to 
+	    SampleMachine.AddState(idle);
+		//  SampleMachine.OnStart(attack);              //parse states to machine
         
     }
 	//50 ticks a sec
@@ -31,12 +32,12 @@ public class FSMOwner : MonoBehaviour
     {
 	    if (Input.GetKeyDown(KeyCode.A) == true)
         {
-	        SampleMachine.OnStart(State1);           
+		    // SampleMachine.OnStart(attack);           
         }
 	    if (Input.GetKeyDown(KeyCode.S) == true)
 	    { 
-	    	SampleMachine.OnStart(State2);  
+	    	//SampleMachine.OnStart(idle);  
 	    }
-	    SampleMachine.OnUpdate(); //update state machine 
+	    // SampleMachine.OnUpdate(); //update state machine 
     }
 }
