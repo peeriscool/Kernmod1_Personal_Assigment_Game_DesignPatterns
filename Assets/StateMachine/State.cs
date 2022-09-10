@@ -16,11 +16,12 @@ public class State<T>
 	{
 		ID = id;
 	}
-	
+
 	public State(T id, string name) : this(id)
 	{
 		Name = name;
 	}
+
 	virtual public void OnEnter()
 	{
 	}

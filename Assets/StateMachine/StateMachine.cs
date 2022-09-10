@@ -6,7 +6,7 @@ using UnityEngine;
 public class StateMachine<T>
 {
 	protected Dictionary<T, State<T> > states; //list of availible states
-	State<T> Currentstate;
+	protected State<T> Currentstate;
 	
 	public void Update()
 	{
@@ -23,6 +23,26 @@ public class StateMachine<T>
 
 	public void AddState(State<T> _state)
 	{
+		if(states.ContainsKey(_state.ID))
+        {
+			if (_state.Name == states[_state.ID].Name)
+			{
+				//same object
+			}
+			else
+			{
+				//add state using proxy refrence to original
+				Debug.Log("error can not add 2 reffrences of the same object to the machine");
+				//states.Add(_state.ID, _state);
+				return;
+			}
+			//check if name differs
+		}
+		if (states.ContainsValue(_state))
+		{
+				
+		}
+		else
 		states.Add(_state.ID, _state);
 	}
 	
@@ -41,16 +61,26 @@ public class StateMachine<T>
 		}
 		if(Currentstate != null)
 		{
-			Currentstate.Onexit();
+			Currentstate.OnExit();
 		}
-		if(Currentstate != null)
+		if(Currentstate == null)
 		{
-			Currentstate.Onenter;
+			Currentstate = _state;
+			//Currentstate.OnUpdate();
+			//AddState(_state);
+			//Currentstate = GetState(_state.ID);
 		}
-		//Currentstate = _state;
+		
 	}
 
-	
+	//public void FixedUpdate()
+	//{
+	//	if (Currentstate != null)
+	//	{
+	//		Currentstate.FixedUpdate();
+	//	}
+	//}
+
 }
 
 /*public class State<T>
