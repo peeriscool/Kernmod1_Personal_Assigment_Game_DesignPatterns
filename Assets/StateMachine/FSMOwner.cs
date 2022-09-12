@@ -10,35 +10,34 @@ public class FSMOwner : MonoBehaviour
 	// define states of any type
 	// create machine using that type
 	// start machine
-	// 
 	/// </summary>
 	public GameObject enemy;
 	EnemyAttackState attack; //for envoirment timed states (counting in seconds)
 	EnemyidleState idle; //a state that sine moves a cube (for now)
-	StateMachine<GameObject> SampleMachine = new StateMachine<GameObject>();
+	StateMachine<int> SampleMachine = new StateMachine<int>();
 	void Start()
 	{
-		SampleMachine = new StateMachine<GameObject>();   //create statemachine
+		SampleMachine = new StateMachine<int>();   //create statemachine
 
-		attack = new EnemyAttackState(enemy, "Attack"); //add states
-		idle = new EnemyidleState(enemy, "Idle");
+		attack = new EnemyAttackState(enemy, "Attack",0); //add states
+		idle = new EnemyidleState(enemy, "Idle",1);
 		SampleMachine.AddState(attack); //assign states to machine
 		SampleMachine.AddState(idle);
 		//  SampleMachine.AddState(idle);
 		//	SampleMachine.OnStart(attack); //first starting point
 		SampleMachine.SetCurrentState(attack);
 	}
-	//50 ticks a sec
-	void FixedUpdate()
+
+	void Update()
 	{
 		SampleMachine.Update();
-	//	if (Input.GetKeyDown(KeyCode.A) == true)
-	//	{
-	//			SampleMachine.OnStart(attack);
-	//	}
-	//	if (Input.GetKeyDown(KeyCode.S) == true)
-	//	{
-	//		SampleMachine.OnStart(idle);
-	//	}
+        if (Input.GetKeyDown(KeyCode.A) == true)
+        {
+            SampleMachine.SetCurrentState(idle);
+        }
+		if (Input.GetKeyDown(KeyCode.S) == true)
+		{
+			SampleMachine.SetCurrentState(attack);
+		}
 	}
 }

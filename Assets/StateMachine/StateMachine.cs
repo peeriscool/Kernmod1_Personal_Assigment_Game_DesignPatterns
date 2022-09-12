@@ -31,16 +31,10 @@ public class StateMachine<T>
 			}
 			else
 			{
-				//add state using proxy refrence to original
-				Debug.Log("error can not add 2 reffrences of the same object to the machine");
+				Debug.Log("error can not add 2 references of the same object to the machine");
 				//states.Add(_state.ID, _state);
 				return;
 			}
-			//check if name differs
-		}
-		if (states.ContainsValue(_state))
-		{
-				
 		}
 		else
 		states.Add(_state.ID, _state);
@@ -62,55 +56,14 @@ public class StateMachine<T>
 		if(Currentstate != null)
 		{
 			Currentstate.OnExit();
+			Currentstate = GetState(_state.ID);
 		}
 		if(Currentstate == null)
 		{
 			Currentstate = _state;
-			//Currentstate.OnUpdate();
-			//AddState(_state);
-			//Currentstate = GetState(_state.ID);
 		}
+		//Currentstate.OnUpdate();
+		//AddState(_state);
 		
 	}
-
-	//public void FixedUpdate()
-	//{
-	//	if (Currentstate != null)
-	//	{
-	//		Currentstate.FixedUpdate();
-	//	}
-	//}
-
 }
-
-/*public class State<T>
-{
-	// The name for the state.
-	public string Name { get; set; }
-	// The ID of the state.
-	public T ID { get; private set; }    
-	
-	//public delegate void OnEnter();
-	//public delegate void OnExit();
-	//public delegate void OnUpdate();
-	public State(T id)
-	{
-		ID = id;
-	}
-	
-	public State(T id, string name) : this(id)
-	{
-		Name = name;
-	}
-	virtual public void Enter()
-	{
-	}
-	virtual public void Exit()
-	{
-	}
-	virtual public void Update()
-	{
-	}
-}
-//https://faramira.com/generic-finite-state-machine-using-csharp/
-*/

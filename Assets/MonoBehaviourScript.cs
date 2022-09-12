@@ -10,7 +10,7 @@ public class MonoBehaviourScript : MonoBehaviour
 	CommandPatternB B;
     void Start()
 	{
-		A = new CommandPatternA("hi",Vector3.up);
+		A = new CommandPatternA("command_name",Vector3.up);
 		B = new CommandPatternB(receiver,"data","stuff");
 	    mycommander = new Commander();  
 	    mycommander.SetOnstart(A);
