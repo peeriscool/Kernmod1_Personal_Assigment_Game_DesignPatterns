@@ -57,11 +57,14 @@ public class StateMachine<T>
 		{
 			Currentstate.OnExit();
 			Currentstate = GetState(_state.ID);
+			Currentstate.OnEnter();
 		}
 		if(Currentstate == null)
 		{
 			Currentstate = _state;
+			Currentstate.OnEnter();
 		}
+		
 		//Currentstate.OnUpdate();
 		//AddState(_state);
 		

@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyidleState : State<int>
 {
 	GameObject Obj;
+	public int SyncTime = 0; //Fixed update count till 30 for 1 sec
+	Vector3 NewLocation;
+	
 	public EnemyidleState(GameObject obj,string name,int id) : base(id,name) 
 	{
 		this.Name = name;//"Idle";
@@ -24,9 +27,16 @@ public class EnemyidleState : State<int>
 	}
 	public override void OnUpdate()
 	{
-		//	Debug.Log("update idle");
-		Vector3 move = new Vector3( 0, Random.Range(-1, 1), 0);
-		Obj.transform.localPosition = Vector3.Lerp(Obj.transform.position, move.normalized,5f);
+		if(SyncTime >= 60) //4sec
+		{
+			NewLocation = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+			SyncTime = 0;
+		}
+		//Debug.Log(this.Name);
+		Obj.transform.localPosition = Vector3.MoveTowards(Obj.transform.localPosition,NewLocation,0.1f);
+		
+		SyncTime++;
+		
 	}
 	public override void OnExit()
 	{

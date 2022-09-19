@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyAttackState : State<int>
 {
 	GameObject Obj;
+	public int SyncTime = 0; //Fixed update count till 30 for 1 sec
+	Vector3 NewLocation;
 	public EnemyAttackState(GameObject obj, string name, int id) : base(id,name) 
 	{
 		this.Name = name;//"attack";
@@ -18,9 +20,15 @@ public class EnemyAttackState : State<int>
 	}
 	public override void OnUpdate()
 	{
+		if(SyncTime >= 120) //4sec
+		{
+			NewLocation = new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
+			SyncTime = 0;
+		}
 		//Debug.Log(this.Name);
-		Vector3 move = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
-		Obj.transform.localPosition = move.normalized ;
+		Obj.transform.localPosition = Vector3.MoveTowards(Obj.transform.localPosition,NewLocation,0.1f);
+		
+		SyncTime++;
 		
 	}
 	public override void OnExit()

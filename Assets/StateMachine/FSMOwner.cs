@@ -30,7 +30,7 @@ public class FSMOwner : MonoBehaviour
 
 	void Update()
 	{
-		SampleMachine.Update();
+		
         if (Input.GetKeyDown(KeyCode.A) == true)
         {
             SampleMachine.SetCurrentState(idle);
@@ -39,5 +39,9 @@ public class FSMOwner : MonoBehaviour
 		{
 			SampleMachine.SetCurrentState(attack);
 		}
+	}
+	void FixedUpdate()
+	{
+		SampleMachine.Update();
 	}
 }
