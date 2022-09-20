@@ -24,6 +24,7 @@ public class EnemyidleState : State<int>
 	public override void OnEnter()
 	{
 		Debug.Log("enter idle");
+		Obj.GetComponent<Renderer>().material.color = Color.blue;
 	}
 	public override void OnUpdate()
 	{
@@ -33,7 +34,7 @@ public class EnemyidleState : State<int>
 			SyncTime = 0;
 		}
 		//Debug.Log(this.Name);
-		Obj.transform.localPosition = Vector3.MoveTowards(Obj.transform.localPosition,NewLocation,0.1f);
+		Obj.transform.position = Vector3.MoveTowards(Obj.transform.localPosition,NewLocation,0.1f);
 		
 		SyncTime++;
 		

@@ -14,9 +14,34 @@ using UnityEngine;
 		
 		//----------------------------==== methods ====-------------------------------------
 		
+		public void SetOnstart(Icommand _command)
+		{
+			this.Onstart = _command;
+			commandlistAdd(_command);
+		}
+	    
+		public void SetOnexit(Icommand _command)
+		{
+			this.Onexit = _command;
+			commandlistAdd(_command);
+		}
+
+		public void RunstartExit()
+		{
+			if(this.Onstart is Icommand)
+			{
+				this.Onstart.Execute();
+			}
+		    
+			if(this.Onexit is Icommand)
+			{
+				this.Onexit.Execute();
+			}
+		}
+		
 		private void commandlistAdd(Icommand _command)
 		{
-			if(commandlist== null)
+			if(commandlist == null)
 			{
 				commandlist = new List<Icommand>();
 				commandlist.Add(_command); //to make sure we still add the first item in a empty list
@@ -31,38 +56,12 @@ using UnityEngine;
 		{
 			commandlist.Remove(_command);
 		}
-		
-		public void SetOnstart(Icommand _command)
-	    {
-		    this.Onstart = _command;
-		    commandlistAdd(_command);
-	    }
-	    
-		public void SetOnexit(Icommand _command)
-		{
-			this.Onexit = _command;
-			commandlistAdd(_command);
-		}
-
-	
-		public void RunstartExit()
-	    {
-		    if(this.Onstart is Icommand)
-		    {
-		    	this.Onstart.Execute();
-		    }
-		    
-		    if(this.Onexit is Icommand)
-		    {
-		    	this.Onexit.Execute();
-		    }
-	    }
-	    
+		 
 		public void CommandFromList(Icommand _command)
 		{
-			Debug.Log(commandlist.Count + " known commands");
 				foreach (Icommand item in commandlist)
 				{
+					Debug.Log(item+" commands");
 					if(item == _command)
 					{
 						item.Execute();

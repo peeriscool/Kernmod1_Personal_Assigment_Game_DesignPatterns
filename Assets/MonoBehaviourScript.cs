@@ -4,28 +4,39 @@ using UnityEngine;
 
 public class MonoBehaviourScript : MonoBehaviour
 {
+	public GameObject Player;
+	InputHandler handler;
 	private Commander mycommander;
-	Receiver receiver = new Receiver();
+	//Receiver receiver = new Receiver();
 	CommandPatternA A;
 	CommandPatternB B;
+	bool command = false;
+	IcommandRecorder Recorder = new IcommandRecorder();
+	
     void Start()
 	{
-		A = new CommandPatternA("command_name",Vector3.up);
-		B = new CommandPatternB(receiver,"data","stuff");
+		handler = new InputHandler(Player);
+		A = new CommandPatternA(Player,Vector3.up);
+		B = new CommandPatternB(Player,"Cube");
 	    mycommander = new Commander();  
-	    mycommander.SetOnstart(A);
-	    mycommander.SetOnexit(B	);
-	    mycommander.RunstartExit();
+		 mycommander.SetOnstart(A);
+		 mycommander.SetOnexit(B);
+		// mycommander.RunstartExit();
+		Recorder.Record(A);
     } 
-	
 
-    
     void Update()
-    {
-	    if(Input.GetKeyDown(KeyCode.A))
+	{
+		handler.KeyReturn();
+	    
+		if(Input.GetKeyUp(KeyCode.A))
 	    {
-	    	Debug.Log("Pressed A: ");
-	    	mycommander.CommandFromList(A);
+			mycommander.CommandFromList(B);
 	    }
-    }
+	    if(Input.GetKeyDown(KeyCode.S))
+	    {
+	    	
+	    }
+	}
+    
 }
