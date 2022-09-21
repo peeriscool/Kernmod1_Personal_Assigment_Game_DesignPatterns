@@ -4,35 +4,59 @@ using UnityEngine;
 
 public class InputHandler
 {
-	private GameObject Player;
 	
-	public InputHandler(GameObject _Player)
+	WASDCommands Command = new WASDCommands();
+	ArrowCommands AltCommand = new ArrowCommands();
+	Icommand handler;
+	private GameObject Actor;
+	
+	public InputHandler()
 	{
-		Player = _Player;
+		SetHandler(Command);
 	}
 	
-	public KeyCode KeyReturn()
-    {
-	    if(Input.GetKeyDown(KeyCode.DownArrow))
-	    {
-		    Player.transform.position += Vector3.back;	
-		    return KeyCode.DownArrow;
-	    }
-	    if(Input.GetKeyDown(KeyCode.LeftArrow))
-	    {
-		    Player.transform.position += Vector3.left;	
-		    return KeyCode.LeftArrow;
-	    }
-	    if(Input.GetKeyDown(KeyCode.RightArrow))
-	    {
-		    Player.transform.position += Vector3.right;	
-		    return KeyCode.RightArrow;
-	    }
-	    if(Input.GetKeyDown(KeyCode.UpArrow))
-	    {
-		    Player.transform.position += Vector3.forward ;	
-		    return KeyCode.UpArrow;
-	    }
-	    return KeyCode.None;
-    }
+	public InputHandler(GameObject _Actor)
+	{
+		Actor = _Actor;
+	}
+	public void HandleInput(KeyCode _keyCode)
+	{
+		
+		
+		if(handler.Equals(Command) )
+		{ 
+			Command.Execute(Actor,_keyCode);
+		}
+			
+		if(handler.Equals(AltCommand))
+		{ 
+			AltCommand.Execute(Actor,_keyCode);
+		}
+	}
+	public void SetHandler(Icommand _Com)
+	{
+		//handler = _Com;
+		if(_Com.GetType() == Command.GetType())
+		{
+			Debug.Log("Handler = WASD");
+			handler = (WASDCommands) Command;
+		}
+		if(_Com.GetType() == AltCommand.GetType())
+		{
+		Debug.Log("Handler = Arrow");
+			handler = (ArrowCommands) AltCommand;
+		}
+	}
+	
 }
+/*
+	if(Input.GetKeyDown(KeyCode.W)){command.Front();}
+		if(Input.GetKeyDown(KeyCode.A)){command.Left() ;}
+		if(Input.GetKeyDown(KeyCode.S)){command.Back() ;}
+		if(Input.GetKeyDown(KeyCode.D)){command.Right();}
+	
+		if(Input.GetKeyDown(KeyCode.UpArrow)) {command.Front() ;}
+		if(Input.GetKeyDown(KeyCode.LeftArrow)){command.Left() ;}
+		if(Input.GetKeyDown(KeyCode.DownArrow)){command.Back() ;}
+		if(Input.GetKeyDown(KeyCode.RightArrow)){command.Right();}
+*/

@@ -9,7 +9,7 @@ using UnityEngine;
 	public interface Icommand
 	{
 	 void Execute();
-	};
+	}
 	public class CommandPatternA : Icommand
 	{
 	//the command and it's related data and functions
