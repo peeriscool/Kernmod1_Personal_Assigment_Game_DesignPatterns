@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class KeyCommand
+{
+	public KeyCode key;
+	public Icommand command;
+}
 
 public class ArrowCommands : Icommand
 {
@@ -27,7 +32,7 @@ public class ArrowCommands : Icommand
 		{
 			Right(_actor);
 		}
-		else {Debug.Log("Key not found in Command" + key.ToString());}
+	
 	}
 	public void Back (GameObject _actor)
 	{
@@ -71,7 +76,7 @@ public class WASDCommands : Icommand
 		{
 			Right(_actor);
 		}
-		else {Debug.Log("Key not found in Command");}
+		
 	}
 	public void Back (GameObject _actor)
 	{

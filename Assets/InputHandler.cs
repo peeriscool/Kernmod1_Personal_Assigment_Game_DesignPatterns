@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputHandler
 {
+	//private List<KeyCommand> Keycommands = new	List<KeyCommand>();
 	
 	WASDCommands Command = new WASDCommands();
 	ArrowCommands AltCommand = new ArrowCommands();
@@ -22,7 +23,14 @@ public class InputHandler
 	public void HandleInput(KeyCode _keyCode)
 	{
 		
-		
+		/*foreach (var keycommand in Keycommands)
+			{
+			if(keycommand.key == _keyCode )
+			{
+				keycommand.command.Execute();
+			}
+		}
+		*/
 		if(handler.Equals(Command) )
 		{ 
 			Command.Execute(Actor,_keyCode);
